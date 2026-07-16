@@ -17,11 +17,34 @@ export function Form(){
           },
           position : "top-center"
         })
+        return;
         }
-        await axios.post(`${BACKEND_URL}/api/v1/pre-interview`,{
-            gitHub
-        })
-        console.log("Form submitted", { gitHub});
+
+        try {
+            new URL(gitHub);
+        } catch {
+            toast("Invalid URL", {
+                description: "Please enter a valid GitHub URL",
+                position: "top-center"
+            });
+            return;
+        }
+
+        try {
+            const response = await axios.post(`${BACKEND_URL}/api/v1/pre-interview`,{
+                gitHub
+            })
+            console.log("Form submitted", { gitHub});
+            console.log("Response:", response.data);
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                toast("Error", {
+                    description: error.response?.data?.message || "Failed to submit form",
+                    position: "top-center"
+                });
+            }
+            console.error("Error submitting form:", error);
+        }
     }
     return(
 

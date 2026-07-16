@@ -1,4 +1,4 @@
-import express   from "express";
+import express  from "express";
 const app = express();
 import axios from "axios";
 import {preInterviewBody} from "./types";
@@ -13,7 +13,7 @@ app.post("/api/v1/pre-interview",async (req, res) => {
 
     if(!success){
         res.status(411).json({
-            message : "Inconrrect body"
+            message : "Incorrect body"
         });
         return;
     }
